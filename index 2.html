@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Little Birthday Note</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Gaegu:wght@400;700&family=Caveat:wght@500;700&family=Homemade+Apple&display=swap">
+<style>
+/* Layout: one phone-width scrapbook column on a wine-red table; a gift scene opens into a spiral notebook, then taped keepsakes down the page. Single deliberate theme. */
+:root {
+  --wine: #701822;
+  --wine-deep: #4e0f17;
+  --paper: #f7f3ee;
+  --cream: #efe2cd;
+  --ink: #7c1623;
+  --blush: #e6b4b8;
+  --gold: #d9b45e;
+  --on-wine: #fbeef0;
+  --shadow: rgba(30, 4, 8, .35);
+  --f-num: "Abril Fatface", "Playfair Display", Georgia, serif;
+  --f-hand: "Gaegu", "Comic Sans MS", "Segoe Print", cursive;
+  --f-script: "Caveat", "Segoe Script", cursive;
+  --f-fancy: "Homemade Apple", "Caveat", cursive;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { overflow-x: clip; }
+html, body { height: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background: var(--wine);
+  background-image: radial-gradient(120% 80% at 50% 0%, #7f1e29 0%, var(--wine) 55%, var(--wine-deep) 100%);
+  background-attachment: fixed;
+  color: var(--on-wine);
+  font-family: var(--f-hand);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: hidden;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
+
+/* ---------- Intro gift scene ---------- */
+.intro {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding-block: 40px;
+  transition: opacity .7s ease, transform .7s ease;
+}
+.intro.leaving { opacity: 0; transform: scale(1.06); pointer-events: none; }
+.gift {
+  position: relative;
+  width: min(360px, 100%);
+  aspect-ratio: 1.25;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+.gift .camera { position: absolute; left: 0; bottom: 18%; width: 36%; transform: rotate(-4deg); filter: drop-shadow(0 6px 8px var(--shadow)); z-index: 3; }
+.gift .bouquet { position: absolute; right: -2%; bottom: 10%; width: 40%; transform: rotate(10deg); filter: drop-shadow(0 8px 10px var(--shadow)); z-index: 4; }
+.env {
+  position: absolute; left: 22%; bottom: 20%; width: 52%; aspect-ratio: 1.35;
+  transform: rotate(-6deg); z-index: 2;
+  filter: drop-shadow(0 8px 12px var(--shadow));
+}
+.env-back { position: absolute; inset: 0; background: #e9dcc6; border-radius: 3px; }
+.env-flap { position: absolute; left: 0; right: 0; bottom: 100%; height: 55%; background: #e2d3ba; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+.env-card {
+  position: absolute; left: 10%; right: 10%; top: -38%; height: 95%;
+  background: #fffdf9; border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  display: grid; place-items: center;
+  font-family: var(--f-fancy); color: #3a2a2a; font-size: clamp(13px, 4vw, 17px); line-height: 1.6; text-align: center;
+  transform: rotate(4deg);
+  transition: transform .9s cubic-bezier(.3,1.4,.5,1);
+}
+.env-front { position: absolute; inset: 0; background: #f1e6d3; clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%); border-radius: 3px; }
+.env-heart { position: absolute; right: 12%; bottom: 14%; width: 16%; }
+.gift.open .env-card { transform: translateY(-48%) rotate(0deg) scale(1.08); }
+.gift:hover .env-card { transform: translateY(-8%) rotate(2deg); }
+.gift.open:hover .env-card { transform: translateY(-48%) rotate(0deg) scale(1.08); }
+.click-me {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  text-align: center; font-family: var(--f-script); font-size: 20px; color: var(--on-wine);
+  animation: nudge 1.6s ease-in-out infinite;
+}
+.float-heart { position: absolute; width: 18px; z-index: 5; animation: drift 3s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(-5px); } }
+@keyframes drift { 50% { transform: translateY(-7px) rotate(8deg); } }
+
+/* ---------- Main scrapbook ---------- */
+main { max-width: 420px; margin: 0 auto; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 56px; }
+main.arriving { animation: arrive .9s ease both; }
+@keyframes arrive { from { transform: translateY(30px); opacity: .2; } }
+
+.notebook {
+  position: relative; background: var(--paper); color: var(--ink);
+  border-radius: 4px 10px 10px 4px;
+  padding: 28px 22px 26px 46px;
+  box-shadow: 0 16px 30px var(--shadow), inset 0 0 0 1px rgba(124,22,35,.06);
+  background-image: repeating-linear-gradient(0deg, transparent 0 29px, rgba(124,22,35,.06) 29px 30px);
+}
+.rings { position: absolute; left: 10px; top: 18px; bottom: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.rings span { width: 26px; height: 10px; border-radius: 6px; background: linear-gradient(#b9b4ae, #eeeae5 45%, #8f8a85); box-shadow: 0 2px 2px rgba(0,0,0,.2); }
+.age-wrap { display: flex; justify-content: center; align-items: flex-end; gap: 2px; }
+.age { font-family: var(--f-num); font-size: clamp(96px, 30vw, 132px); line-height: .9; color: var(--ink); letter-spacing: -2px; }
+.cupcake { width: 58px; margin-bottom: 4px; margin-left: -10px; transform: rotate(8deg); }
+.greet { text-align: center; font-size: 19px; line-height: 1.35; margin: 14px 0 22px; text-wrap: balance; }
+.greet b { font-weight: 700; font-size: 22px; }
+
+.photo-zone { position: relative; display: flex; justify-content: center; padding: 6px 0 10px; }
+.washi { position: absolute; left: -6px; top: 10px; bottom: 20px; width: 40px; background: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 11px); opacity: .9; }
+.polaroid {
+  position: relative; background: #fff; padding: 10px 10px 42px; width: 72%;
+  box-shadow: 0 10px 18px rgba(40,10,10,.28);
+  transform: rotate(var(--r, -3deg));
+}
+.sticker {
+  position: absolute; top: -18px; right: -26px; font-family: var(--f-script); font-weight: 700; color: var(--ink);
+  font-size: 22px; line-height: .9; background: #fff; padding: 6px 10px; border-radius: 6px;
+  transform: rotate(14deg); box-shadow: 0 3px 6px rgba(0,0,0,.18); text-align: center;
+}
+.clip { position: absolute; top: -14px; left: 46%; width: 22px; height: 30px; border: 3px solid #9a9590; border-radius: 10px; border-bottom-color: transparent; }
+.pin-heart { position: absolute; top: -10px; left: -12px; width: 30px; transform: rotate(-16deg); }
+.star { width: 26px; position: absolute; }
+.star use { fill: currentColor; }
+.ily { text-align: center; font-family: var(--f-script); font-size: 26px; margin: 0; }
+
+/* Photo slots */
+.photo {
+  aspect-ratio: 1 / 1; width: 100%; background: linear-gradient(155deg, #edd2cf, #c98d94);
+  background-size: cover; background-position: center;
+  position: relative; display: grid; place-items: center; overflow: hidden;
+}
+.photo.tall { aspect-ratio: 3 / 4; }
+.photo.wide { aspect-ratio: 4 / 3; }
+.photo .ph { font-family: var(--f-script); color: rgba(255,255,255,.92); font-size: 18px; text-align: center; line-height: 1; display: grid; gap: 4px; justify-items: center; }
+.photo .ph svg { width: 26px; opacity: .85; }
+.photo.filled .ph { display: none; }
+
+/* Letter section */
+.keepsake { position: relative; display: flex; justify-content: center; padding-top: 30px; }
+.mini-env { position: relative; width: 78%; aspect-ratio: 1.15; transform: rotate(-8deg); }
+.mini-env .back { position: absolute; inset: 0; background: var(--cream); border-radius: 4px; box-shadow: 0 12px 22px var(--shadow); }
+.mini-env .flap { position: absolute; left: 0; right: 0; top: -36%; height: 50%; background: #e7d7bd; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+.mini-env .flap::after { content: ""; position: absolute; left: 50%; top: 35%; width: 28px; height: 28px; transform: translateX(-50%); }
+.mini-env .doodle { position: absolute; left: 34%; top: -26%; width: 36px; z-index: 2; }
+.striped {
+  position: absolute; left: 6%; right: 6%; top: 22%;
+  padding: 7px; background: repeating-linear-gradient(45deg, #e7a3b3 0 5px, #fff 5px 9px, #8fb8d8 9px 13px, #fff 13px 17px);
+  transform: rotate(4deg); box-shadow: 0 6px 12px rgba(0,0,0,.2);
+}
+.note { font-size: 20px; line-height: 1.4; margin: 0; max-width: 62ch; }
+.note + .note { margin-top: 16px; }
+
+.taped { position: relative; width: 74%; margin: 0 auto; background: #fff; padding: 10px; box-shadow: 0 12px 20px var(--shadow); transform: rotate(var(--r, 3deg)); }
+.tape { position: absolute; width: 74px; height: 22px; background: rgba(246, 236, 205, .82); box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.tape.tr { top: -10px; right: -22px; transform: rotate(42deg); }
+.tape.bl { bottom: -8px; left: -22px; transform: rotate(42deg); }
+
+.film-wrap { position: relative; padding: 14px 0; }
+.film {
+  position: relative; background: #151012; padding: 16px 8px;
+  display: flex; gap: 6px; transform: rotate(-2deg);
+  box-shadow: 0 10px 18px var(--shadow);
+}
+.film::before, .film::after {
+  content: ""; position: absolute; left: 6px; right: 6px; height: 6px;
+  background: repeating-linear-gradient(90deg, #f1e6e6 0 7px, transparent 7px 13px);
+  border-radius: 1px;
+}
+.film::before { top: 5px; } .film::after { bottom: 5px; }
+.film .photo { flex: 1; min-width: 0; aspect-ratio: 3/4; filter: saturate(.85) contrast(1.05); }
+.film .photo .ph { font-size: 14px; }
+.film .photo .ph svg { width: 16px; }
+.bow { position: absolute; left: -10px; top: -4px; width: 52px; z-index: 2; transform: rotate(-18deg); }
+
+.stamp {
+  position: relative; padding: 12px;
+  background: radial-gradient(circle, var(--wine) 4.5px, transparent 5px) -6px -6px / 12px 12px, var(--cream);
+  transform: rotate(-3deg); filter: drop-shadow(0 12px 16px var(--shadow));
+}
+.stamp-inner {
+  background: var(--cream); color: var(--ink); padding: 18px 16px 30px 18px;
+  display: grid; grid-template-columns: 1fr 40%; gap: 14px; align-items: start;
+}
+.stamp-inner p { font-size: 16px; line-height: 1.35; margin: 0; min-width: 0; }
+.stamp-inner .polaroid { width: 100%; padding: 6px 6px 22px; --r: 6deg; margin-top: 6px; }
+.stamp .teddy { position: absolute; left: -16px; bottom: -18px; width: 66px; }
+.stamp .cassette { position: absolute; right: 30%; bottom: -30px; width: 74px; transform: rotate(-10deg); }
+.stamp .bow-mini { width: 22px; display: block; margin-bottom: 6px; }
+
+.closing { text-align: center; display: grid; justify-items: center; gap: 18px; padding-top: 8px; }
+.closing h2 { font-family: var(--f-script); font-weight: 700; font-size: 40px; margin: 0; line-height: 1; text-wrap: balance; }
+.again {
+  background: var(--paper); color: var(--ink); border: 0; border-radius: 999px; padding: 10px 22px;
+  font-family: var(--f-script); font-size: 22px; cursor: pointer; box-shadow: 0 6px 14px var(--shadow);
+}
+.again:hover { transform: translateY(-2px) rotate(-2deg); }
+
+.reveal.in { animation: settle .8s cubic-bezier(.2,.9,.3,1.2) both; }
+@keyframes settle { from { translate: 0 26px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></symbol>
+    <symbol id="heart" viewBox="0 0 24 22"><path d="M12 21C5 15.5 1 12 1 7a5.5 5.5 0 0 1 11-1 5.5 5.5 0 0 1 11 1c0 5-4 8.5-11 14z"/></symbol>
+    <symbol id="rose" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="9" fill="#9a1426"/>
+      <path d="M10 10m-2 0a2 2 0 1 1 4 0a4 4 0 1 1-8 0a6 6 0 1 1 12 0a7.5 7.5 0 0 1-3 6" fill="none" stroke="#5c0913" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="bowsym" viewBox="0 0 50 40">
+      <path d="M25 16C17 2 4 4 6 14s14 8 19 2zM25 16c8-14 21-12 19-2s-14 8-19 2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M24 17l-8 21M26 17l9 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="25" cy="16" r="3.4" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+  <button class="gift" id="gift" aria-label="Open your birthday surprise">
+    <svg class="camera" viewBox="0 0 120 84" aria-hidden="true">
+      <rect x="18" y="4" width="26" height="14" rx="3" fill="#ebe7e1"/>
+      <rect x="4" y="14" width="112" height="64" rx="11" fill="#f8f6f3" stroke="#d8d2ca"/>
+      <rect x="4" y="14" width="20" height="64" rx="9" fill="#ece8e2"/>
+      <rect x="90" y="22" width="18" height="9" rx="2" fill="#dcd8d2"/>
+      <circle cx="98" cy="10" r="5" fill="#d6d1ca"/>
+      <circle cx="66" cy="47" r="27" fill="#e4dfd8"/>
+      <circle cx="66" cy="47" r="21" fill="#2a2427"/>
+      <circle cx="66" cy="47" r="13" fill="#3e353a"/>
+      <circle cx="66" cy="47" r="6" fill="#5d6077"/>
+      <circle cx="60" cy="41" r="3.5" fill="#fff" opacity=".5"/>
+      <circle cx="104" cy="66" r="3" fill="#c03344"/>
+    </svg>
+
+    <div class="env" aria-hidden="true">
+      <div class="env-back"></div>
+      <div class="env-card">Happy<br>Birthday</div>
+      <div class="env-front"></div>
+      <svg class="env-heart" viewBox="0 0 24 22"><use href="#heart" fill="#c2364a"/></svg>
+    </div>
+
+    <svg class="bouquet" viewBox="0 0 120 150" aria-hidden="true">
+      <polygon points="8,46 60,146 112,46 92,18 28,18" fill="#efe6da" stroke="#dccfbd"/>
+      <ellipse cx="22" cy="44" rx="12" ry="5" fill="#4d6a3a" transform="rotate(-35 22 44)"/>
+      <ellipse cx="98" cy="40" rx="12" ry="5" fill="#4d6a3a" transform="rotate(35 98 40)"/>
+      <ellipse cx="60" cy="16" rx="11" ry="4.5" fill="#5b7a45" transform="rotate(-80 60 16)"/>
+      <use href="#rose" x="20" y="20" width="26" height="26"/>
+      <use href="#rose" x="44" y="12" width="28" height="28"/>
+      <use href="#rose" x="70" y="20" width="26" height="26"/>
+      <use href="#rose" x="30" y="40" width="26" height="26"/>
+      <use href="#rose" x="58" y="38" width="28" height="28"/>
+      <use href="#rose" x="82" y="44" width="20" height="20"/>
+      <use href="#rose" x="16" y="56" width="20" height="20"/>
+      <polygon points="16,68 60,146 104,68 84,90 60,80 36,90" fill="#fbf8f3" stroke="#e3d8c8"/>
+      <g transform="translate(60 112)">
+        <path d="M0 0C-14-14-30-6-22 4S-6 6 0 0zM0 0C14-14 30-6 22 4S6 6 0 0z" fill="#a51a2c"/>
+        <path d="M-2 2L-12 30M2 2L12 30" stroke="#a51a2c" stroke-width="5" stroke-linecap="round"/>
+        <circle r="5" fill="#8a1222"/>
+      </g>
+    </svg>
+
+    <svg class="float-heart" style="left:58%;top:6%" viewBox="0 0 24 22" aria-hidden="true"><use href="#heart" fill="#e8a2ad"/></svg>
+    <svg class="float-heart" style="left:14%;top:20%;width:13px;animation-delay:-1.2s" viewBox="0 0 24 22" aria-hidden="true"><use href="#heart" fill="#f2c9cf"/></svg>
+    <span class="click-me">click me!</span>
+  </button>
+</section>
+
+<!-- MAIN -->
+<main id="main" hidden>
+  <section class="notebook reveal">
+    <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="age-wrap">
+      <span class="age" id="age">20</span>
+      <svg class="cupcake" viewBox="0 0 60 72" aria-hidden="true">
+        <path d="M12 40H48L43 69H17Z" fill="#e7a29b"/>
+        <path d="M19 40l3 29M26 40l1.5 29M34 40l-1.5 29M41 40l-3 29" stroke="#f5ccc6" stroke-width="2"/>
+        <ellipse cx="30" cy="40" rx="21" ry="7" fill="#fbf2e8" stroke="#e9d6c2"/>
+        <ellipse cx="30" cy="32" rx="17" ry="7" fill="#fbf2e8" stroke="#e9d6c2"/>
+        <ellipse cx="30" cy="25" rx="12" ry="6" fill="#fbf2e8" stroke="#e9d6c2"/>
+        <rect x="20" y="34" width="4" height="1.6" fill="#e05b77" transform="rotate(30 22 35)"/>
+        <rect x="36" y="30" width="4" height="1.6" fill="#5aa0d6" transform="rotate(-30 38 31)"/>
+        <rect x="28" y="38" width="4" height="1.6" fill="#f2bf3c"/>
+        <rect x="24" y="27" width="4" height="1.6" fill="#7fc08b" transform="rotate(60 26 28)"/>
+        <circle cx="30" cy="15" r="5.5" fill="#b0162a"/>
+        <path d="M30 10c1-4 4-6 7-6" stroke="#5c7a40" stroke-width="1.6" fill="none"/>
+        <circle cx="28.3" cy="13.4" r="1.4" fill="#fff" opacity=".6"/>
+      </svg>
+    </div>
+    <p class="greet"><b>Happy Birthday, my love!</b><br>Another year of you being you, and the world is still a softer place because of it ♡</p>
+
+    <div class="photo-zone">
+      <div class="washi" aria-hidden="true"></div>
+      <figure class="polaroid" style="--r:-4deg; margin:0">
+        <span class="clip" aria-hidden="true"></span>
+        <svg class="pin-heart" viewBox="0 0 24 22" aria-hidden="true"><use href="#heart" fill="#d24a5f"/></svg>
+        <div class="photo" data-slot="0"></div>
+        <span class="sticker">Favorite<br>person</span>
+        <svg class="star" style="right:-10px;bottom:6px;color:#bdb6b0" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+        <svg class="star" style="right:14px;bottom:-6px;width:18px;color:#8f8984" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+      </figure>
+    </div>
+    <p class="ily">I love you!</p>
+  </section>
+
+  <section class="keepsake reveal" aria-hidden="true">
+    <div class="mini-env">
+      <div class="flap"></div>
+      <div class="back"></div>
+      <svg class="doodle" viewBox="0 0 40 40"><path d="M20 30C10 24 6 18 9 13s9-3 11 2c2-5 8-7 11-2s-1 11-11 17zM20 30c-2 4-8 6-14 4" fill="none" stroke="#8a2a36" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="striped"><div class="photo wide" data-slot="1"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="note reveal">It's strange how fast a year goes when you spend it with the right person. So many little moments got folded into these months: late drives, inside jokes nobody else gets, and quiet nights that turned into my favorite memories. I hope today reminds you how loved you are, and how much brighter you make everyone's life, especially mine.</p>
+  </section>
+
+  <section class="reveal">
+    <div class="taped" style="--r:3deg">
+      <span class="tape tr" aria-hidden="true"></span>
+      <span class="tape bl" aria-hidden="true"></span>
+      <svg class="star" style="left:-14px;top:-12px;color:#b3172b;width:28px" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+      <div class="photo wide" data-slot="2"></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="note reveal">If I could keep one box of everything from this year, it would be overflowing: blurry photos, silly voice notes, tickets we forgot to throw away, and every moment that meant more than it seemed at the time. For now, I just want you to have the best day ever, because you absolutely deserve it. <span style="color:#ff6b7f">♥</span></p>
+  </section>
+
+  <section class="film-wrap reveal">
+    <svg class="bow" viewBox="0 0 50 40" style="color:#f4d7dc" aria-hidden="true"><use href="#bowsym"/></svg>
+    <div class="film">
+      <div class="photo" data-slot="3"></div>
+      <div class="photo" data-slot="4"></div>
+      <div class="photo" data-slot="5"></div>
+      <div class="photo" data-slot="6"></div>
+      <div class="photo" data-slot="7"></div>
+    </div>
+    <svg class="star" style="right:-6px;top:30%;color:var(--gold);width:30px" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+  </section>
+
+  <section class="stamp reveal">
+    <div class="stamp-inner">
+      <p><svg class="bow-mini" viewBox="0 0 50 40" style="color:#a51a2c" aria-hidden="true"><use href="#bowsym"/></svg>And just like that, another chapter begins. I hope you always remember how loved you are, not only today but in all the ordinary moments in between. Here's to more late-night talks, silly pictures, unplanned adventures and memories we haven't made yet. Whatever comes next, I'm so glad I get to be a part of it.</p>
+      <figure class="polaroid" style="margin:0">
+        <div class="photo tall" data-slot="8"></div>
+        <svg class="star" style="right:-8px;top:-10px;color:var(--gold);width:20px" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"/></svg>
+      </figure>
+    </div>
+    <svg class="teddy" viewBox="0 0 60 60" aria-hidden="true">
+      <circle cx="16" cy="12" r="7" fill="#9b6a47"/><circle cx="16" cy="12" r="3.5" fill="#c99a75"/>
+      <circle cx="44" cy="12" r="7" fill="#9b6a47"/><circle cx="44" cy="12" r="3.5" fill="#c99a75"/>
+      <ellipse cx="30" cy="48" rx="18" ry="12" fill="#8c5d3d"/>
+      <circle cx="30" cy="26" r="16" fill="#9b6a47"/>
+      <ellipse cx="30" cy="31" rx="7" ry="5.5" fill="#d8b190"/>
+      <circle cx="24" cy="23" r="1.8" fill="#2b1a12"/><circle cx="36" cy="23" r="1.8" fill="#2b1a12"/>
+      <ellipse cx="30" cy="29" rx="2.4" ry="1.7" fill="#2b1a12"/>
+      <path d="M22 41c4 3 12 3 16 0" stroke="#b0162a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+    <svg class="cassette" viewBox="0 0 80 50" aria-hidden="true">
+      <rect x="1" y="1" width="78" height="48" rx="4" fill="#f3eee6" stroke="#3b3536" stroke-width="2"/>
+      <rect x="8" y="7" width="64" height="14" rx="2" fill="#fff" stroke="#c9c1b6"/>
+      <path d="M13 15c6-3 12 2 18-1s10 2 16 0" stroke="#b0162a" stroke-width="1.4" fill="none"/>
+      <rect x="18" y="25" width="44" height="14" rx="7" fill="#3b3536"/>
+      <circle cx="28" cy="32" r="5" fill="#f3eee6"/><circle cx="52" cy="32" r="5" fill="#f3eee6"/>
+      <path d="M22 49l4-6h28l4 6" fill="#e2dbd0" stroke="#3b3536" stroke-width="1.5"/>
+    </svg>
+  </section>
+
+  <section class="closing reveal">
+    <svg viewBox="0 0 24 22" width="34" aria-hidden="true"><use href="#heart" fill="#ff6b7f"/></svg>
+    <h2>Happy birthday.<br>I love you, always.</h2>
+    <button class="again" id="again">Open it again</button>
+  </section>
+</main>
+
+<script>
+// Add photos here: data: URIs or files published next to the page, in slot order 0–8.
+const PHOTOS = [];
+
+const camIcon = '<svg viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="4.5" width="21" height="14" rx="3"/><circle cx="12" cy="11.5" r="4"/><path d="M8 4.5l1.5-3h5l1.5 3"/></svg>';
+document.querySelectorAll('.photo[data-slot]').forEach(el => {
+  const i = +el.dataset.slot;
+  if (PHOTOS[i]) { el.style.backgroundImage = `url("${PHOTOS[i]}")`; el.classList.add('filled'); }
+  el.innerHTML = `<span class="ph">${camIcon}photo ${i + 1}</span>`;
+});
+
+const intro = document.getElementById('intro');
+const main = document.getElementById('main');
+const gift = document.getElementById('gift');
+let opening = false;
+
+gift.addEventListener('click', () => {
+  if (opening) return;
+  opening = true;
+  gift.classList.add('open');
+  setTimeout(() => intro.classList.add('leaving'), 650);
+  setTimeout(() => {
+    intro.hidden = true;
+    main.hidden = false;
+    main.classList.add('arriving');
+    window.scrollTo(0, 0);
+    observe();
+  }, 1250);
+});
+
+document.getElementById('again').addEventListener('click', () => {
+  main.hidden = true;
+  main.classList.remove('arriving');
+  document.querySelectorAll('.reveal.in').forEach(el => el.classList.remove('in'));
+  intro.hidden = false;
+  intro.classList.remove('leaving');
+  gift.classList.remove('open');
+  opening = false;
+  window.scrollTo(0, 0);
+});
+
+function observe() {
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+</script>
+</body>
+</html>
